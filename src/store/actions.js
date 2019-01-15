@@ -1,4 +1,4 @@
-import * as actionTypes from './actionsTypes';
+import * as actionTypes from './actionTypes';
 import { animeAxios } from '../axios-giphy';
 
 export const setModalData = (payload) => {

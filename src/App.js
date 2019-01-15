@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import Modal from './components/Modal/Modal';
-import * as actionTypes from './store/actionsTypes';
+import * as actionTypes from './store/actionTypes';
 import * as actions from './store/actions';
 
 class App extends Component {
