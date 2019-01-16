@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Modal isVisible={this.props.showModal} data={this.props.giphyData}/>
+        <Modal isVisible={this.props.showModal} data={this.props.giphyData} closeModal={this.props.hideModalOnClick}/>
         <button onClick={this.props.showModalOnClick}>GIMME DA GIFS</button>
         <button 
           style={{

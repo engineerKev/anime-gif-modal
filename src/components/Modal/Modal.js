@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import classes from './Modal.css';
+import classes from './Modal.module.css';
+import Aux from '../../hoc/Aux';
+import Backdrop from '../Backdrop/Backdrop';
 //either use hooks or make this a class component
 
 //or do it with class then do an update with hooks
@@ -23,10 +25,17 @@ class Modal extends Component {
     }
     render() {
         return (
-            <div className={classes.Modal} style={{display: this.props.isVisible && this.props.data ? 'block' : 'none'}}>
-                <h1>{this.prettifyTitle(this.props.data.title)}</h1>
-                <img src={this.props.data.image_url} width="580" height="326" alt="giphy gif"/>
-            </div>
+            <Aux>
+                <Backdrop show={this.props.isVisible} clicked={this.props.closeModal}/>
+                <div className={classes.Modal} style={{
+                    transform: this.props.isVisible ? 'translateY(0)' : 'translateY(-100vh)',
+                    opacity: this.props.isVisible ? '1' : '0'
+                    // display: this.props.isVisible && this.props.data ? 'block' : 'none'
+                    }}>
+                    <h1>{this.prettifyTitle(this.props.data.title)}</h1>
+                    <img src={this.props.data.image_url} style={{maxWidth: '100%'}}alt="giphy gif"/>
+                </div>
+            </Aux>
         );
     }
 };
