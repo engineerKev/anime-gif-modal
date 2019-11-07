@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose} from 'redux';
+import { BrowserRouter } from 'react-router-dom';
+
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import reducer from './store/reducer';
+import authReducer from './store/reducers/auth';
+import modalReducer from './store/reducers/giphModal';
+import likedGiphsReducer from './store/reducers/likedGiphs';
+
+const rootReducer = combineReducers({
+    modal: modalReducer,
+    auth: authReducer,
+    likedGiphs: likedGiphsReducer
+})
 
 const logger = store => {
     return next => {
@@ -21,11 +31,13 @@ const logger = store => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__  || compose;
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(logger, thunk)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
 
 const app = (
     <Provider store={store}>
-        <App/>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
     </Provider>
 );
 

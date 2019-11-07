@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     showModal: false,
@@ -15,7 +15,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.HIDE_MODAL:
             return {
                 ...state,
-                showModal: false
+                showModal: false,
+                giphyData: {}
             }
         case actionTypes.SET_MODAL_DATA:
             return {

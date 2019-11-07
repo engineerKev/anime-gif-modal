@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
-import { animeAxios } from '../axios-giphy';
+import { animeAxios } from '../../axios-giphy';
+import * as projectData from '../../../src/creds';
 
 export const setModalData = (payload) => {
     return {
@@ -17,7 +18,7 @@ export const initModal =  () => {
     return dispatch => {
         animeAxios.get('/gifs/random?', {
             params: {
-                api_key: '',
+                api_key: projectData.giphyKey,
                 tag: 'anime',
                 rating: 'R'
             }

@@ -1,40 +1,41 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import './App.css';
-import Modal from './components/Modal/Modal';
-import * as actionTypes from './store/actionTypes';
-import * as actions from './store/actions';
+import GiphModal from './containers/GiphModal/GiphModal';
+import LikedGiphs from './containers/LikedGiphs/LikedGiphs';
+import Auth from './containers/Auth/Auth';
+import Logout from './containers/Auth/Logout/Logout';
+import Layout from './components/Layout/Layout';
+import * as actions from './store/actions/index';
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
+
   render() {
     return (
-      <div className="App">
-        <Modal isVisible={this.props.showModal} data={this.props.giphyData} closeModal={this.props.hideModalOnClick}/>
-        <button onClick={this.props.showModalOnClick}>GIMME DA GIFS</button>
-        <button 
-          style={{
-            display: this.props.showModal ? 'block' : 'none',
-            margin: this.props.showModal ? '0 auto' : '0'
-          }}
-          onClick={this.props.hideModalOnClick}
-        >PLZ NO MORE GIFS</button>
-      </div>
+        <Layout>
+          <div className="App">
+            <Switch>
+              <Route path="/logout" component={Logout} />
+              <Route path="/likes" component={LikedGiphs} />
+              <Route path="/auth" component={Auth} />
+              <Route path="/" component={GiphModal} />
+            </Switch>
+          </div>
+        </Layout>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    showModal: state.showModal,
-    giphyData: state.giphyData
-  };
-}
-
 const mapDispatchToProps = dispatch => {
   return {
-    showModalOnClick: () => dispatch(actions.initModal()),
-    hideModalOnClick: () => dispatch( {type: actionTypes.HIDE_MODAL} )
-  };
+    onTryAutoSignup: ()  => dispatch(actions.authCheckState())
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
