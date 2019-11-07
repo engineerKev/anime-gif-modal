@@ -1,5 +1,9 @@
-<<<<<<< HEAD
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# anime-gif-modal
+* Simple React w/ Redux project that consumes GIPHY api and uses modals
+* It was built to interact with google's firebase backend
+
+
+###### This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -67,7 +71,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-=======
-# anime-gif-modal
-Simple React w/ Redux project that consumes GIPHY api and uses modals
->>>>>>> 72908a8de366ab54b9e169e34830a81f32324771
