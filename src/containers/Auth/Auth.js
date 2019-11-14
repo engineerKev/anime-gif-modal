@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Aux from '../../hoc/Aux';
 import * as  actions from '../../store/actions/index';
 import classes from './Auth.module.css';
 
@@ -42,13 +43,6 @@ class Auth extends Component {
                 }
             },
             isSignup: true
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if(this.props.userId !== prevProps.userId) {
-            const { history } = this.props;
-            history.push('/');
         }
     }
 
@@ -91,6 +85,28 @@ class Auth extends Component {
         })
     }
 
+    authRender = (formContents) => {
+        if(this.props.userId) {
+            return (
+                <Redirect to="/" />
+            )
+        }
+        return (
+            <div className={classes.AuthForm}>
+                <div>User Authentication</div>
+                <form onSubmit={this.submitHandler}>
+                   {formContents}
+                   <Button btnType="Success" >Submit</Button>
+                   <Button 
+                        btnType="Danger"
+                        clicked={this.switchAuthModeHandler}
+                        type="button"
+                    >Switch to {this.state.isSignup ? 'Signin' : 'Signup'}</Button> 
+                </form>
+            </div>
+        )
+    }
+
     render () {
         const formElementsArray = [];
         for (let key in this.state.controls) {
@@ -114,20 +130,11 @@ class Auth extends Component {
             />);
         })
         return (
-            <div className={classes.AuthForm}>
-                <div>User Authentication</div>
-                <form onSubmit={this.submitHandler}>
-                   {form}
-                   <Button btnType="Success" >Submit</Button>
-                   <Button 
-                        btnType="Danger"
-                        clicked={this.switchAuthModeHandler}
-                        type="button"
-                    >Switch to {this.state.isSignup ? 'Signin' : 'Signup'}</Button> 
-                </form>
-            </div>
-        )
-    }
+            <Aux>
+                {this.authRender(form)}
+            </Aux>
+        );
+    };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -142,4 +149,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

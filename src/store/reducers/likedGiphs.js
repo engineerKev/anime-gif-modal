@@ -6,6 +6,7 @@ const initialState = {
     hasLikes: false,
     error: null,
     isLoading: false,
+    fetchedSavedLikes: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -43,12 +44,13 @@ const reducer = (state = initialState, action) => {
                isLoading: true
             }
         case actionTypes.GET_USER_LIKES_SUCCESS:
-            likedGiphsArray = [...state.likedGiphs, ...action.likes]; 
+            likedGiphsArray = [...state.likedGiphs, ...action.likes];
             return {
                 ...state,
                likedGiphs: likedGiphsArray,
                hasLikes: likedGiphsArray.length !== 0,
-               isLoading: false 
+               isLoading: false,
+               fetchedSavedLikes: true, 
             }
         case actionTypes.GET_USER_LIKES_FAILED: 
             return {
@@ -60,7 +62,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 likedGiphs: [],
-                hasLikes: false
+                hasLikes: false,
+                fetchedSavedLikes: false
             }
         default:
             return state;

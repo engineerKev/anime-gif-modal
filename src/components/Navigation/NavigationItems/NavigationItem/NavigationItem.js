@@ -8,7 +8,7 @@ const navigationItem = (props) => {
         auxliraryClasses += props.show ? '' : classes.Hide;
         return (
         <li className={classes.NavigationItem}>
-            <Link className={`${auxliraryClasses}`} to={props.path} onClick={props.clicked}>{props.linkText}</Link>
+            <Link className={`${auxliraryClasses}`} to={props.path} >{props.linkText}</Link>
         </li>);
 };
 

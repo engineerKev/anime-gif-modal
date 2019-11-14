@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
 import GiphModal from './containers/GiphModal/GiphModal';
-import LikedGiphs from './containers/LikedGiphs/LikedGiphs';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import Layout from './components/Layout/Layout';
+import asyncComponent from './hoc/asyncComponent';
 import * as actions from './store/actions/index';
+
+const AsyncLikedGiphs = asyncComponent(() => { 
+  return import('./containers/LikedGiphs/LikedGiphs') 
+});
 
 class App extends Component {
 
@@ -17,18 +21,43 @@ class App extends Component {
   }
 
   render() {
-    return (
-        <Layout>
-          <div className="App">
-            <Switch>
-              <Route path="/logout" component={Logout} />
-              <Route path="/likes" component={LikedGiphs} />
-              <Route path="/auth" component={Auth} />
-              <Route path="/" component={GiphModal} />
-            </Switch>
-          </div>
-        </Layout>
+    let routes = (
+      <Switch>
+        <Route path="/auth" component={Auth} />
+        <Route path="/likes" component={AsyncLikedGiphs} />
+        <Route path="/" exact component={GiphModal} />
+        <Redirect to="/" />
+      </Switch>
+
     );
+    if(this.props.isAuthenticated) {
+      routes =(
+        <Switch>
+          <Route path="/logout" component={Logout} />
+          <Route path="/likes" component={AsyncLikedGiphs} />
+          <Route path="/" exact component={GiphModal} />
+          <Redirect to="/" />
+        </Switch>
+
+      );
+    }
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <Layout>
+            <Switch>
+              {routes}
+            </Switch>
+          </Layout>
+        </BrowserRouter>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token
   }
 }
 
@@ -38,4 +67,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

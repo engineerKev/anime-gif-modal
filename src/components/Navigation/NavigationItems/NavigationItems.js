@@ -11,7 +11,7 @@ const navigationItems = (props) => {
             path={navItem.path} 
             linkText={navItem.text} show={navItem.show} 
             key={`${navItem.linkText}${i}`} 
-            clicked={() => {props.clickHandler(i)}}/>) : null;
+            />) : null;
     }
     return (
     <ul className={classes.NavigationItems}>

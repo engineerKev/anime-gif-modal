@@ -22,18 +22,20 @@ class LikedGiphs extends Component {
             },
             {
                 type: "Success",
+                extraClasses: this.saveLikesBtnClasses,
                 clickHandler: this.getGiphs,
                 text: 'Get MOAR Giphs',
-                extraClasses: () => {}
             }
         ]}
     }
+    
     componentDidMount() {
-        const { token, userId, likedGiphs} = this.props;
-        if(!likedGiphs.length) {
+        const { token, userId, fetchedSavedLikes } = this.props
+        if(!fetchedSavedLikes) {
             this.props.getUserLikes(token, userId);
         }
     }
+    
     getListOfGiphs = () => {
         if(this.props.likedGiphs) {
             return this.props.likedGiphs.map(giphyObj => <img className={classes.Img} key={giphyObj.id} src={giphyObj.url} alt="favorite giphy gif" />)
@@ -47,13 +49,13 @@ class LikedGiphs extends Component {
     }
 
     saveLikesBtnClasses = () => {
-        const auxilaryClasses = this.props.showSaveButton ? '' : 'Hide';
+        const auxilaryClasses = this.props.showLoggedInButtons ? '' : 'Hide';
         return `${auxilaryClasses}`;
     }
 
     getGiphs = () => {
         const { history } = this.props;
-        history.push('/');
+        history.push("/");
     }
 
     ifUserSaveLikes = () => {
@@ -62,7 +64,7 @@ class LikedGiphs extends Component {
             return (
             <span 
                 className={classes.Announcement}
-            >Please <Link className={classes.Link} to='/auth'> sign-in / sign-up </Link> to save likes
+            >Please <Link className={classes.Link} to="/auth"> sign-in / sign-up </Link> to save likes
             </span>);
         } else {
             return (
@@ -99,10 +101,11 @@ class LikedGiphs extends Component {
 const mapStateToProps = state => {
     return {
         likedGiphs: state.likedGiphs.likedGiphs,
-        showSaveButton: state.likedGiphs.hasLikes,
+        showLoggedInButtons: state.likedGiphs.hasLikes,
         token: state.auth.token,
         userId: state.auth.userId,
-        isLoading: state.likedGiphs.isLoading
+        isLoading: state.likedGiphs.isLoading,
+        fetchedSavedLikes: state.likedGiphs.fetchedSavedLikes
     }
 }
 
