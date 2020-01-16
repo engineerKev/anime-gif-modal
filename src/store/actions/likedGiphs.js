@@ -41,6 +41,11 @@ export const getUserLikesSuccess = (likes) => {
     }
 }
 
+export const useCurrentLikes = () => {
+    return {
+        type: actionTypes.ONLY_LOAD_LOCAL_LIKES
+    }
+}
 export const getUserLikesFailed = () => {
     return {
         type: actionTypes.GET_USER_LIKES_FAILED
@@ -59,7 +64,6 @@ export const saveLikes = (payload, token, userId) => {
             likes: [...payload],
             userId: userId
         };
-        console.log(userLikes)
         axios.put('/liked-giphys/'+userId+'.json?auth='+token, userLikes)
             .then(response => {
                 console.log(response);
@@ -92,7 +96,7 @@ export const getUserLikes = (token, userId) => {
 
                 });
         } else {
-            dispatch(getUserLikesSuccess([]));
+            dispatch(useCurrentLikes());
         }
     }
 }

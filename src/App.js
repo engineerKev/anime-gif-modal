@@ -7,6 +7,7 @@ import GiphModal from './containers/GiphModal/GiphModal';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import Layout from './components/Layout/Layout';
+import Carousel from './components/Carousel/Carousel';
 import asyncComponent from './hoc/asyncComponent';
 import * as actions from './store/actions/index';
 
@@ -23,6 +24,7 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
+        <Route path="/carousel" component={Carousel} />
         <Route path="/auth" component={Auth} />
         <Route path="/likes" component={AsyncLikedGiphs} />
         <Route path="/" exact component={GiphModal} />
@@ -33,6 +35,7 @@ class App extends Component {
     if(this.props.isAuthenticated) {
       routes =(
         <Switch>
+          <Route path="/carousel" component={Carousel} />
           <Route path="/logout" component={Logout} />
           <Route path="/likes" component={AsyncLikedGiphs} />
           <Route path="/" exact component={GiphModal} />
@@ -45,9 +48,7 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <Layout>
-            <Switch>
               {routes}
-            </Switch>
           </Layout>
         </BrowserRouter>
       </div>

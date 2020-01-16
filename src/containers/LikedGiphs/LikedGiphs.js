@@ -10,25 +10,6 @@ import classes from './LikedGiphs.module.css';
 import * as actions from '../../store/actions/index';
 
 class LikedGiphs extends Component {
-    constructor(props) {
-        super(props);
-        const {likedGiphs, token, userId} = this.props
-        this.state = { adjacentButtonsControls: [
-            {
-                type: "Success",
-                extraClasses: this.saveLikesBtnClasses,
-                text: 'Save Likes',
-                clickHandler: () => {this.props.saveLikes(likedGiphs, token, userId)}
-            },
-            {
-                type: "Success",
-                extraClasses: this.saveLikesBtnClasses,
-                clickHandler: this.getGiphs,
-                text: 'Get MOAR Giphs',
-            }
-        ]}
-    }
-    
     componentDidMount() {
         const { token, userId, fetchedSavedLikes } = this.props
         if(!fetchedSavedLikes) {
@@ -36,13 +17,6 @@ class LikedGiphs extends Component {
         }
     }
     
-    getListOfGiphs = () => {
-        if(this.props.likedGiphs) {
-            return this.props.likedGiphs.map(giphyObj => <img className={classes.Img} key={giphyObj.id} src={giphyObj.url} alt="favorite giphy gif" />)
-        }
-        return null;
-    };
-
     unlikeGiph = (giphUrl) => {
         const updatedLikedGiphs = this.props.likedGiphs.filter(giphObj => giphObj.url !== giphUrl)
         this.props.updateLikedGiphs(updatedLikedGiphs);
@@ -59,7 +33,21 @@ class LikedGiphs extends Component {
     }
 
     ifUserSaveLikes = () => {
-        const { token } = this.props;
+        const {likedGiphs, token, userId} = this.props
+        const adjacentButtonsControls =  [
+            {
+                type: "Success",
+                extraClasses: this.saveLikesBtnClasses,
+                text: 'Save Likes',
+                clickHandler: () => {this.props.saveLikes(likedGiphs, token, userId)}
+            },
+            {
+                type: "Success",
+                extraClasses: this.saveLikesBtnClasses,
+                clickHandler: this.getGiphs,
+                text: 'Get MOAR Giphs',
+            }
+        ]
         if(!token) {
             return (
             <span 
@@ -68,7 +56,7 @@ class LikedGiphs extends Component {
             </span>);
         } else {
             return (
-                <AdjacentButtons numOfButtons={2} buttons={this.state.adjacentButtonsControls} />
+                <AdjacentButtons numOfButtons={2} buttons={adjacentButtonsControls} />
             )
         }
     }

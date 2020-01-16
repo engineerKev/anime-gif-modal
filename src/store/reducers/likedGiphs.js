@@ -52,6 +52,11 @@ const reducer = (state = initialState, action) => {
                isLoading: false,
                fetchedSavedLikes: true, 
             }
+        case actionTypes.ONLY_LOAD_LOCAL_LIKES:
+            return {
+                ...state,
+               isLoading: false
+            }
         case actionTypes.GET_USER_LIKES_FAILED: 
             return {
                 ...state,

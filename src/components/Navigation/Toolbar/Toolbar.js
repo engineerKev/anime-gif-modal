@@ -32,6 +32,12 @@ class Toolbar extends Component {
                 path: "/logout",
                 text: "Logout",
                 show: userId !== null
+            },
+            {
+                active: false,
+                path: "/carousel",
+                text: "Carousel",
+                show: true
             }
         ];
         const indexOfRoute = this.getIndexOfCurrentRoute(navElements);
