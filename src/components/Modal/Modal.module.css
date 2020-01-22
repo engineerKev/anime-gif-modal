@@ -18,7 +18,25 @@
     transform: translateY(0);
     opacity: 1;
 }
+.X{
+    color: #505050;
+    font-size: 24px;
+    border: transparent;
+    cursor: pointer;
+    display: inline-block;
+    background-color: transparent;
+    width: 100%;
+    text-align: right;
+}
 
+.X::after {
+    content: " ";
+    height: 24px;
+    background-color: transparent;
+}
+.X:focus {
+    outline: none;
+}
 .Like {
     color: rgb(240, 0, 240);
     text-transform: uppercase;

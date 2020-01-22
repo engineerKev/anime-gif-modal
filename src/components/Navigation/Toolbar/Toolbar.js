@@ -37,7 +37,7 @@ class Toolbar extends Component {
                 active: false,
                 path: "/carousel",
                 text: "Carousel",
-                show: true
+                show: hasLikes || userId
             }
         ];
         const indexOfRoute = this.getIndexOfCurrentRoute(navElements);

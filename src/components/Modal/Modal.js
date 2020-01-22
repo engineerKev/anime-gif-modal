@@ -15,7 +15,8 @@ const modal = (props) => {
         <Aux>
             <Backdrop show={props.isVisible} clicked={props.closeModal}/>
             <div className={classes.Modal+" "+modalIsVisible()}>
-                    {props.children}
+                <button className={classes.X} onClick={props.closeModal}>&#10005;</button>
+                {props.children}
             </div>
         </Aux>
     );
